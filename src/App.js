@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AppBody from "./components/AppBody";
+import Header from "./components/Header";
+import Title from "./components/Title";
+import { ReactComponent as Asteroid } from "./asteroidIcon.svg";
+import Navigation from "./components/Navigation";
+import Search from "./Search";
+import Container from "./Container";
+import NEO from "./components/NEOs";
+import StartPage from "./components/StartPage";
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [state, setState] = useState("start");
+
+  console.log(state);
+
+  const renderSwitch = (param) => {
+    switch (param) {
+      case "start":
+        return <StartPage />;
+      case "near earth objects":
+        return <NEO />;
+      case "search asteroids":
+        return <Search />;
+      default:
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppBody>
+      <Header>
+        <Container flex spaceBetween center>
+          <Title href="/">
+            <Asteroid
+              fill="white"
+              style={{
+                width: "auto",
+                height: "40px",
+                verticalAlign: "middle",
+                marginRight: "10px",
+              }}
+            />
+            Asteroid watch
+          </Title>
+          <Navigation onItemClick={(item) => setState(item)} />
+        </Container>
+      </Header>
+      {renderSwitch(state)}
+    </AppBody>
   );
-}
+};
 
 export default App;
